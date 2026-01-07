@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" spacing="15.0"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.campusconnect.controllers.LoginController"
+      stylesheets="@../styles.css">
+
+    <padding>
+        <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+    </padding>
+
+    <Label text="Campus Connect" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+    <Label text="Please log in to continue" style="-fx-text-fill: #95a5a6;"/>
+
+    <VBox spacing="5" maxWidth="300">
+        <Label text="Email"/>
+        <TextField fx:id="emailField" promptText="student@university.edu" />
+    </VBox>
+
+    <VBox spacing="5" maxWidth="300">
+        <Label text="Password"/>
+        <PasswordField fx:id="passwordField" promptText="••••••" />
+    </VBox>
+
+    <Label fx:id="errorLabel" text="" style="-fx-text-fill: #e74c3c;" />
+
+    <Button text="Log In" onAction="#handleLogin" defaultButton="true" prefWidth="200" style="-fx-base: #3498db;"/>
+
+    <Button text="Create New Account" onAction="#goToRegister" prefWidth="200" style="-fx-background-color: transparent; -fx-text-fill: #3498db; -fx-underline: true;"/>
+
+</VBox>

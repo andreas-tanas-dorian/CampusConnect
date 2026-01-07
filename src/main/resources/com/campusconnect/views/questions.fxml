@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.campusconnect.controllers.QuestionsController"
+      spacing="10"
+      stylesheets="@../styles.css"
+      styleClass="sidebar-container">
+
+    <Label text="Help Queue" styleClass="heading-small"/>
+
+    <Button text="+ Ask a Question"
+            onAction="#handleAskQuestion"
+            maxWidth="Infinity"
+            styleClass="action-button"/>
+
+    <Separator />
+
+    <VBox fx:id="questionsListContainer" spacing="10" VBox.vgrow="ALWAYS" />
+
+</VBox>
