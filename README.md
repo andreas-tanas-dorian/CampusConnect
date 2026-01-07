@@ -4,6 +4,8 @@
 
 Built with **JavaFX** and **Oracle Database**, this project demonstrates a robust **Client-Server Architecture** using Java Sockets for communication and Multithreading for concurrent user handling.
 
+Note: This is a college project. It is not meant to provide a secure platform for any institution. It is an implementation of the skills and knowledge gained during the Java and Databases course.
+
 ---
 
 ## 🚀 Key Features
@@ -135,7 +137,7 @@ src/main/java/com/campusconnect/
 
 ## 📝 License
 
-This project was developed for the [University Name / Course Name] project.
+This project was developed for the West University of Timisoara Java Programming/Databases project.
 
 ```
 
