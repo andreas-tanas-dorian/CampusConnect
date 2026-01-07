@@ -77,11 +77,22 @@ public class FeedController {
 
     @FXML
     private void openInbox() {
-        // Placeholder for existing inbox logic
-        System.out.println("Opening Inbox...");
-    }
+        try {
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("views/inbox.fxml"));
+            Parent root = loader.load();
 
-    // --- Existing Feed Handlers (Stubs to prevent FXML errors if buttons exist) ---
+            Stage stage = new Stage();
+            stage.setTitle("Campus Connect - Inbox");
+            stage.setScene(new Scene(root));
+
+            // Optional: Block interaction with main window until inbox is closed
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Could not load inbox.fxml");
+        }
+    }
 
     @FXML private void handleCreateGroup() {
         System.out.println("Create Group Clicked");
