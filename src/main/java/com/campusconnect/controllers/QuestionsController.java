@@ -1,5 +1,6 @@
 package com.campusconnect.controllers;
 
+import com.campusconnect.services.AppState;
 import com.campusconnect.storage.StorageService;
 import com.campusconnect.models.Question;
 import javafx.animation.KeyFrame;
@@ -77,7 +78,7 @@ public class QuestionsController {
 
         Button resolveBtn = new Button("Answer & Resolve");
         resolveBtn.setMaxWidth(Double.MAX_VALUE);
-        resolveBtn.setStyle("-fx-background-color: #e0e0e0; -fx-cursor: hand;");
+        resolveBtn.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; -fx-cursor: hand; -fx-font-weight: bold;");
         resolveBtn.setOnAction(e -> handleResolve(q));
 
         card.getChildren().addAll(contentLabel, timeLabel, resolveBtn);
@@ -93,7 +94,10 @@ public class QuestionsController {
         dialog.showAndWait().ifPresent(answer -> {
             if (answer.trim().isEmpty()) return;
             try {
-                storageService.resolveQuestion(q, answer);
+                String currentUserId = AppState.getInstance().getCurrentUser().getId();
+
+                storageService.resolveQuestion(q, answer, currentUserId);
+
                 refreshQuestionsUI();
             } catch (Exception e) {
                 e.printStackTrace();

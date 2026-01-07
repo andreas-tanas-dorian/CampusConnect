@@ -43,4 +43,5 @@ public class Group implements SerializableEntity, Validatable {
     public String getName() { return name; }
     public String getDescription() { return description; }
     public String toString() { return name; }
+    public String getCreatorId() { return creatorId; }
 }

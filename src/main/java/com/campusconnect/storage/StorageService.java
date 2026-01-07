@@ -15,22 +15,29 @@ import java.util.Map; // Import Map
 public interface StorageService {
 
     void saveStudent(Student s) throws Exception;
+
     Student findStudentByEmail(String email) throws Exception;
 
     Map<String, Student> getAllStudents();
 
     List<Post> getAllPosts() throws Exception;
+
     void savePost(Post p) throws Exception;
+
+    List<Post> getPostsByGroupId(String groupId) throws Exception;
 
     void loadData() throws Exception;
 
     void saveComment(Comment c) throws Exception;
+
     List<Comment> getCommentsForPost(String postId) throws Exception;
 
     void saveGroup(Group g) throws Exception;
+
     List<Group> getAllGroups() throws Exception;
 
     void joinGroup(GroupMember gm) throws Exception;
+
     List<GroupMember> getMembers(String groupId) throws Exception;
 
     String saveImageFile(File file) throws Exception;
@@ -38,8 +45,14 @@ public interface StorageService {
     void saveQuestion(Question q) throws Exception;
 
     List<Question> getOpenQuestions() throws Exception;
-    void resolveQuestion(Question q, String answerText) throws Exception;
+
+    void resolveQuestion(Question q, String answerText, String resolverId) throws Exception;
+
+    void addScore(String studentId, int points) throws Exception;
+
+    void deletePost(String postId) throws Exception;
 
     void saveNotification(Notification n) throws Exception;
+
     List<Notification> getNotifications(String studentId) throws Exception;
 }

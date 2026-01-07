@@ -190,15 +190,66 @@ public class FileStorageService implements StorageService {
     }
 
     @Override
-    public void resolveQuestion(Question q, String answerText) throws IOException {
+    public void resolveQuestion(Question q, String answerText, String resolverId) throws IOException {
+        // 1. Remove from Pending Queue
         questionQueue.remove(q);
         overwriteQuestionFile();
 
+        // 2. Create Notification for the asker
         String fullMessage = "Re: " + q.getContent() + " -> " + answerText;
         Notification reply = new Notification(q.getAuthorId(), fullMessage);
-
         saveNotification(reply);
-        System.out.println("Notification saved for user: " + q.getAuthorId());
+
+        // --- NEW: GAMIFICATION LOGIC ---
+
+        // Calculate how many minutes have passed since the question was asked
+        long minutesElapsed = java.time.temporal.ChronoUnit.MINUTES.between(q.getTimestamp(), java.time.LocalDateTime.now());
+
+        int pointsAwarded = 0;
+
+        if (minutesElapsed <= 5) {
+            // HUGE BONUS for speed
+            pointsAwarded = 50;
+            System.out.println("SPEED BONUS! Answered in " + minutesElapsed + " minutes.");
+        } else {
+
+            pointsAwarded = 12 + (int)(minutesElapsed / 30);
+            System.out.println("BOUNTY CLAIMED! Question waited " + minutesElapsed + " minutes.");
+        }
+
+        try {
+            addScore(resolverId, pointsAwarded);
+            System.out.println("Awarded " + pointsAwarded + " points to user " + resolverId);
+        } catch (Exception e) {
+            System.err.println("Could not add score: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Post> getPostsByGroupId(String groupId) {
+        // Filter the in-memory list for posts belonging to this group
+        return posts.stream()
+                .filter(p -> groupId.equals(p.getGroupId()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deletePost(String postId) throws Exception {
+        // Simple implementation: Remove from memory list
+        posts.removeIf(p -> p.getId().equals(postId));
+
+        // Note: For FileStorage, strictly deleting from the CSV file
+        // requires re-writing the whole file. Since we are using Database now,
+        // updating just the memory list is sufficient to stop the error.
+    }
+
+    @Override
+    public void addScore(String studentId, int points) throws IOException {
+        Student s = students.get(studentId);
+        if (s != null) {
+            s.setScore(s.getScore() + points);
+            saveStudent(s);
+        }
     }
 
     private void overwriteQuestionFile() throws IOException {
