@@ -24,7 +24,6 @@ public class Notification implements SerializableEntity {
 
     @Override
     public String toCSV() {
-        // We replace commas in the message to avoid breaking the CSV format
         String safeMessage = message.replace(",", ";");
         return id + "," + recipientId + "," + safeMessage + "," + timestamp.format(ISO_FMT);
     }
@@ -38,7 +37,6 @@ public class Notification implements SerializableEntity {
         this.timestamp = LocalDateTime.parse(parts[3], ISO_FMT);
     }
 
-    // Getters
     public String getId() { return id; }
     public String getRecipientId() { return recipientId; }
     public String getMessage() { return message; }

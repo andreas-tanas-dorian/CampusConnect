@@ -43,10 +43,8 @@ public class FeedController {
     private StorageService storage;
     private File selectedImageFile;
 
-    // Cache to look up names quickly (ID -> Student)
     private Map<String, Student> studentCache;
 
-    // Track which group we are viewing (null = Main Feed)
     private Group currentViewedGroup = null;
 
     @FXML
@@ -58,23 +56,20 @@ public class FeedController {
         }
 
         refreshUserProfile();
-        loadStudentCache(); // Load names so we don't show IDs
+        loadStudentCache();
         loadGroups();
 
-        // Default: Load Main Feed
         loadFeed(null);
 
-        // Listener: Handle Group Selection
         groupListView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
                 currentViewedGroup = newVal;
-                loadFeed(newVal.getId()); // Filter by Group
+                loadFeed(newVal.getId());
             }
         });
     }
 
     private void loadStudentCache() {
-        // Fetch all students once so we can look up names instantly
         try {
             studentCache = storage.getAllStudents();
         } catch (Exception e) {
@@ -101,16 +96,13 @@ public class FeedController {
         }
     }
 
-    // --- LOAD FEED (With Comments & Names) ---
     private void loadFeed(String groupId) {
         if (postListView == null) return;
 
-        // Update Header
         if (groupId == null) {
             feedLabel.setText("Main Feed");
         } else {
             feedLabel.setText("Group Feed");
-            // Ideally show Group Name here, but we only have ID in this method scope easily
         }
 
         try {
@@ -123,7 +115,6 @@ public class FeedController {
 
             postListView.setItems(FXCollections.observableArrayList(posts));
 
-            // --- CUSTOM CELL FACTORY (The UI for each Post) ---
             postListView.setCellFactory(param -> new ListCell<Post>() {
                 @Override
                 protected void updateItem(Post p, boolean empty) {
@@ -135,7 +126,6 @@ public class FeedController {
                         VBox card = new VBox(8);
                         card.setStyle("-fx-padding: 10; -fx-border-color: #ddd; -fx-border-width: 0 0 1 0;");
 
-                        // 1. Author Name
                         String authorName = p.getAuthorId();
                         if (studentCache != null && studentCache.containsKey(p.getAuthorId())) {
                             authorName = studentCache.get(p.getAuthorId()).getName();
@@ -143,21 +133,18 @@ public class FeedController {
                         Label author = new Label(authorName);
                         author.setStyle("-fx-font-weight: bold; -fx-text-fill: #2c3e50;");
 
-                        // 2. Content
                         Label content = new Label(p.getContent());
                         content.setWrapText(true);
                         content.setMaxWidth(450);
 
                         card.getChildren().addAll(author, content);
 
-                        // 3. Image (if exists)
                         if (p.getImagePath() != null && !p.getImagePath().equals("null")) {
                             Label imgLbl = new Label("📷 [Image Attached] " + p.getImagePath());
                             imgLbl.setStyle("-fx-text-fill: blue; -fx-font-size: 10px;");
                             card.getChildren().add(imgLbl);
                         }
                         HBox actionBox = new HBox(10);
-                        // 4. "View Comments" Button
                         Button commentsBtn = new Button("Comments");
                         commentsBtn.setStyle("-fx-font-size: 11px; -fx-background-color: #3498db; -fx-text-fill: white; -fx-cursor: hand; -fx-font-weight: bold;");
                         commentsBtn.setOnAction(e -> openCommentsWindow(p));
@@ -202,7 +189,6 @@ public class FeedController {
             FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/campusconnect/views/comments.fxml"));
             Parent root = loader.load();
 
-            // Pass the selected post to the popup controller
             CommentsController controller = loader.getController();
             controller.setPost(post);
 
@@ -216,14 +202,11 @@ public class FeedController {
             System.err.println("Could not load comments.fxml. Check file path.");
         }
     }
-    // --- OTHER ACTIONS ---
 
     private void handleDeletePost(Post p) {
         try {
-            // 1. Delete from DB (You need to add this method to StorageService!)
             storage.deletePost(p.getId());
 
-            // 2. Remove from UI immediately
             postListView.getItems().remove(p);
 
             System.out.println("Post deleted.");
@@ -264,7 +247,6 @@ public class FeedController {
             String imgPath = null;
             if (selectedImageFile != null) imgPath = storage.saveImageFile(selectedImageFile);
 
-            // Determine if this post is for a specific Group or Main Feed
             String targetGroupId = (currentViewedGroup != null) ? currentViewedGroup.getId() : null;
 
             Post p = new Post(UUID.randomUUID().toString(), user.getId(), content, targetGroupId, imgPath);
@@ -277,7 +259,6 @@ public class FeedController {
             selectedImageFile = null;
             selectedImageLabel.setText("No file selected");
 
-            // Reload the view we are currently looking at
             loadFeed(targetGroupId);
 
         } catch (Exception e) {
@@ -303,10 +284,6 @@ public class FeedController {
         } catch (Exception e) { e.printStackTrace(); }
     }
 
-    // --- JOIN GROUP LOGIC (Triggered by button if you add one, or auto-join on post) ---
-    // Note: Currently just viewing a group allows posting.
-    // If you want strict joining, we need a button in the UI.
-    // For now, clicking the group simply filters the feed.
 
     @FXML private void handleShowNotifications() {
         try {

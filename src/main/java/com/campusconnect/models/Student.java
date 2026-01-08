@@ -10,7 +10,6 @@ public class Student implements SerializableEntity, Validatable {
     private String password;
     private String name;
 
-    // New Profile Fields
     private String specialization;
     private int studyYear;
     private String studentGroup;
@@ -41,7 +40,6 @@ public class Student implements SerializableEntity, Validatable {
         if (name == null || name.isEmpty()) {
             throw new InvalidInputException("Name cannot be empty.");
         }
-        // New Validations
         if (specialization == null || specialization.isEmpty()) {
             throw new InvalidInputException("Specialization is required.");
         }
@@ -55,7 +53,6 @@ public class Student implements SerializableEntity, Validatable {
 
     @Override
     public String toCSV() {
-        // Appending new fields to CSV string
         return id + "," + email + "," + password + "," + name + "," +
                 specialization + "," + studyYear + "," + studentGroup + "," + score;
     }

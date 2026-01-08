@@ -14,7 +14,6 @@ public class AskQuestionController {
 
     private StorageService storageService;
 
-    // This method is called by the QuestionsController
     public void setStorageService(StorageService service) {
         this.storageService = service;
     }
@@ -29,10 +28,8 @@ public class AskQuestionController {
         }
 
         try {
-            // 1. Get current user
             String authorId = AppState.getInstance().getCurrentUser().getId();
 
-            // 2. Create and Save Question
             Question q = new Question(authorId, content);
 
             if (storageService != null) {
@@ -40,7 +37,6 @@ public class AskQuestionController {
                 System.out.println("Question saved!");
             }
 
-            // 3. Close the window
             closeWindow();
 
         } catch (Exception e) {

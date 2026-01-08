@@ -29,7 +29,6 @@ public class RegisterController {
 
             String id = UUID.randomUUID().toString();
 
-            // Create Student with new Constructor
             Student newStudent = new Student(
                     id,
                     emailField.getText(),

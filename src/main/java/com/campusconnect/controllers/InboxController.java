@@ -23,10 +23,8 @@ public class InboxController {
 
     private void loadNotifications() {
         try {
-            // 1. Get current user ID
             String currentUserId = AppState.getInstance().getCurrentUser().getId();
 
-            // 2. Fetch notifications for this user from storage
             List<Notification> myNotifs = App.storage.getNotifications(currentUserId);
 
             if (myNotifs.isEmpty()) {
@@ -35,10 +33,8 @@ public class InboxController {
                 statusLabel.setText("You have " + myNotifs.size() + " messages.");
             }
 
-            // 3. Put them in the list
             notificationList.setItems(FXCollections.observableArrayList(myNotifs));
 
-            // 4. Make the list look nice (Date + Message)
             notificationList.setCellFactory(param -> new ListCell<Notification>() {
                 @Override
                 protected void updateItem(Notification item, boolean empty) {
@@ -62,7 +58,6 @@ public class InboxController {
 
     @FXML
     private void handleClose() {
-        // Close the window
         statusLabel.getScene().getWindow().hide();
     }
 }

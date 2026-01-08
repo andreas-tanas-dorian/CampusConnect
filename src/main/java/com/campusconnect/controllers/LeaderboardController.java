@@ -31,7 +31,7 @@ public class LeaderboardController {
 
     private void loadLeaderboardData() {
         List<Student> allStudents = App.storage.getAllStudents().values().stream()
-                .sorted(Comparator.comparingInt(Student::getScore).reversed()) // Sort Descending
+                .sorted(Comparator.comparingInt(Student::getScore).reversed())
                 .collect(Collectors.toList());
 
         ObservableList<Student> data = FXCollections.observableArrayList(allStudents);

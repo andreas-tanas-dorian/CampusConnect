@@ -38,7 +38,6 @@ public class Group implements SerializableEntity, Validatable {
         this.creatorId = parts[3];
     }
 
-    // Getters
     public String getId() { return id; }
     public String getName() { return name; }
     public String getDescription() { return description; }

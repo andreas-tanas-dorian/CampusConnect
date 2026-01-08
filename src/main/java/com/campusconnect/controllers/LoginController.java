@@ -23,18 +23,15 @@ public class LoginController {
         String pass = passwordField.getText();
 
         try {
-            // Basic validation
             if(email.isEmpty() || pass.isEmpty()) {
                 throw new IllegalArgumentException("Fields cannot be empty");
             }
 
-            // Look up user
             Student s = App.storage.findStudentByEmail(email);
             if (s == null || !s.getPassword().equals(pass)) {
                 throw new AuthException("Invalid credentials");
             }
 
-            // Success: Set global state and switch UI
             AppState.getInstance().setCurrentUser(s);
             App.setRoot("feed");
 

@@ -111,30 +111,22 @@ public class QuestionsController {
         return String.format("%02d:%02d", minutes, seconds);
     }
 
-    // --- THIS IS THE UPDATED PART ---
     @FXML
     private void handleAskQuestion() {
         if (storageService == null) return;
 
         try {
-            // 1. Load the new FXML
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/campusconnect/views/AskQuestion.fxml"));
             Parent root = loader.load();
 
-            // 2. Get the controller and pass the storage service to it
             AskQuestionController controller = loader.getController();
             controller.setStorageService(this.storageService);
 
-            // 3. Create a new window (Stage)
             Stage stage = new Stage();
             stage.setTitle("Ask a Question");
             stage.setScene(new Scene(root));
-            stage.initModality(Modality.APPLICATION_MODAL); // Blocks the main window until closed
-
-            // 4. Show it and wait
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
-
-            // 5. Refresh the list when they close the window (in case they submitted something)
             refreshQuestionsUI();
 
         } catch (IOException e) {

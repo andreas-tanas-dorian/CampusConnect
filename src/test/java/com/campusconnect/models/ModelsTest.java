@@ -9,10 +9,6 @@ import java.util.UUID;
 
 class ModelsTest {
 
-    // ==========================================
-    // REQUIREMENT: 1 Test Case for EACH Constructor
-    // ==========================================
-
     @Test
     void testStudentConstructor() {
         String id = UUID.randomUUID().toString();
@@ -56,7 +52,6 @@ class ModelsTest {
 
     @Test
     void testQuestionConstructor() {
-        // Question sets its own ID and Timestamp, so we test those exist
         Question q = new Question("user-5", "How do I fix this bug?");
 
         assertNotNull(q.getId()); // Should be auto-generated
@@ -85,13 +80,8 @@ class ModelsTest {
         assertEquals("student-1-group-99", gm.getId());
     }
 
-    // ==========================================
-    // REQUIREMENT: 3 Test Cases for Functionality
-    // ==========================================
-
     @Test
     void testStudentValidation_InvalidEmail() {
-        // Functionality: Validation logic rejects bad emails
         Student s = new Student("1", "bad-email", "pass", "Name", "Spec", 1, "Grp");
 
         Exception exception = assertThrows(InvalidInputException.class, s::validate);
@@ -100,7 +90,6 @@ class ModelsTest {
 
     @Test
     void testStudentValidation_InvalidYear() {
-        // Functionality: Business logic (Year must be 1-6)
         Student s = new Student("1", "a@b.com", "pass", "Name", "Spec", 99, "Grp");
 
         Exception exception = assertThrows(InvalidInputException.class, s::validate);
@@ -109,20 +98,15 @@ class ModelsTest {
 
     @Test
     void testCSVSerialization() {
-        // Functionality: Ensure objects survive toCSV -> fromCSV transformation
-        // This confirms our data won't corrupt when sent over Network or saved to Disk
 
         Student original = new Student("id-123", "a@b.com", "pass", "Name", "Spec", 3, "Grp");
         original.setScore(50);
 
-        // 1. Convert to String
         String csv = original.toCSV();
 
-        // 2. Reconstruct new object
         Student copy = new Student();
         copy.fromCSV(csv);
 
-        // 3. Verify they are identical
         assertEquals(original.getId(), copy.getId());
         assertEquals(original.getScore(), copy.getScore());
         assertEquals(original.getName(), copy.getName());

@@ -13,7 +13,6 @@ import java.util.*;
 
 public class DatabaseStorageService implements StorageService {
 
-    // UPDATE: Ensure this matches your Docker setup
     private static final String URL = "jdbc:oracle:thin:@localhost:1521/FREE";
     private static final String USER = "SYSTEM";
     private static final String PASS = "SecretPassword123";
@@ -34,7 +33,6 @@ public class DatabaseStorageService implements StorageService {
     @Override
     public void loadData() {}
 
-    // ================= STUDENT =================
 
     @Override
     public void saveStudent(Student s) throws Exception {
@@ -117,8 +115,6 @@ public class DatabaseStorageService implements StorageService {
         }
     }
 
-    // ================= GROUPS =================
-
     @Override
     public void saveGroup(Group g) throws Exception {
         String sql = "INSERT INTO groups (id, name, description, creator_id) VALUES (?, ?, ?, ?)";
@@ -155,7 +151,6 @@ public class DatabaseStorageService implements StorageService {
     @Override public void joinGroup(GroupMember gm) {}
     @Override public List<GroupMember> getMembers(String groupId) { return new ArrayList<>(); }
 
-    // ================= POSTS & COMMENTS =================
 
     @Override
     public void savePost(Post p) throws Exception {
@@ -198,7 +193,6 @@ public class DatabaseStorageService implements StorageService {
             stmt.setString(4, c.getContent());
             stmt.executeUpdate();
 
-            // Gamification: Give 5 points for commenting
             addScore(c.getAuthorId(), 5);
         }
     }
@@ -222,7 +216,6 @@ public class DatabaseStorageService implements StorageService {
         return list;
     }
 
-    // ================= QUESTIONS & MESSAGES (FIXED) =================
 
     @Override
     public void saveQuestion(Question q) throws Exception {
@@ -242,14 +235,10 @@ public class DatabaseStorageService implements StorageService {
         String sql = "SELECT * FROM questions ORDER BY created_at ASC FETCH FIRST 10 ROWS ONLY";
         try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                // Manual Construction to avoid CSV crash
                 String id = rs.getString("id");
                 String author = rs.getString("author_id");
                 String content = rs.getString("content");
                 LocalDateTime ts = rs.getTimestamp("created_at").toLocalDateTime();
-
-                // We use the string trick ONLY because Question lacks a public full constructor
-                // If this fails, add a constructor to Question.java
                 String cleanContent = content.replace(",", ";");
                 String csv = id + "," + author + "," + cleanContent + "," + ts.toString();
 
@@ -266,18 +255,14 @@ public class DatabaseStorageService implements StorageService {
 
     @Override
     public void resolveQuestion(Question q, String answerText, String resolverId) throws Exception {
-        // 1. Calc Score
         long minutes = ChronoUnit.MINUTES.between(q.getTimestamp(), LocalDateTime.now());
         int points = (minutes <= 5) ? 50 : 10 + (int)(minutes / 30);
 
-        // 2. Add Score
         addScore(resolverId, points);
 
-        // 3. Create Notification
         Notification n = new Notification(q.getAuthorId(), "Re: " + q.getContent() + " -> " + answerText);
         saveNotification(n);
 
-        // 4. Delete Question
         try (PreparedStatement stmt = connection.prepareStatement("DELETE FROM questions WHERE id = ?")) {
             stmt.setString(1, q.getId());
             stmt.executeUpdate();
@@ -305,13 +290,11 @@ public class DatabaseStorageService implements StorageService {
             stmt.setString(1, studentId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                // Manual construction to prevent parsing errors
                 String id = rs.getString("id");
                 String recipient = rs.getString("recipient_id");
                 String msg = rs.getString("message");
                 LocalDateTime ts = rs.getTimestamp("created_at").toLocalDateTime();
 
-                // Construct CSV safely
                 String cleanMsg = msg.replace(",", ";");
                 String csv = id + "," + recipient + "," + cleanMsg + "," + ts.toString();
 
@@ -338,7 +321,6 @@ public class DatabaseStorageService implements StorageService {
 
     @Override
     public void deletePost(String postId) throws Exception {
-        // Note: You might need to delete comments first due to Foreign Keys!
         String deleteComments = "DELETE FROM comments WHERE post_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(deleteComments)) {
             stmt.setString(1, postId);

@@ -13,7 +13,6 @@ public class Post implements SerializableEntity, Validatable {
 
     public Post() {}
 
-    // Update Constructor
     public Post(String id, String authorId, String content, String groupId, String imagePath) {
         this.id = id;
         this.authorId = authorId;
@@ -44,7 +43,6 @@ public class Post implements SerializableEntity, Validatable {
         this.content = parts[2].replace(";", ",");
         this.groupId = parts[3];
 
-        // Handle the new column safely
         if (parts.length > 4 && !parts[4].equals("null")) {
             this.imagePath = parts[4];
         } else {
