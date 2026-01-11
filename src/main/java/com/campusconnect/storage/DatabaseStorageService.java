@@ -23,7 +23,7 @@ public class DatabaseStorageService implements StorageService {
         try {
             connection = DriverManager.getConnection(URL, USER, PASS);
             connection.setAutoCommit(true);
-            System.out.println("✅ Connected to Oracle Database!");
+            System.out.println("Connected to Oracle Database!");
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to connect to DB");
