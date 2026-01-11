@@ -20,10 +20,10 @@ public class Server {
 
         try {
             dbService = new DatabaseStorageService();
-            System.out.println("✅ Connected to Database Service.");
+            System.out.println("Connected to Database Service.");
 
             ServerSocket serverSocket = new ServerSocket(PORT);
-            System.out.println("🚀 Server listening on port " + PORT);
+            System.out.println("Server listening on port " + PORT);
 
             ExecutorService threadPool = Executors.newFixedThreadPool(10);
 

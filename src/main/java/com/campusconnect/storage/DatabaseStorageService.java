@@ -122,7 +122,6 @@ public class DatabaseStorageService implements StorageService {
             stmt.setString(1, g.getId());
             stmt.setString(2, g.getName());
             stmt.setString(3, g.getDescription());
-            // FIX: Using the AppState user as creator if g.getCreatorId() is null/empty
             String creator = (g.getCreatorId() != null) ? g.getCreatorId() : AppState.getInstance().getCurrentUser().getId();
             stmt.setString(4, creator);
             stmt.executeUpdate();

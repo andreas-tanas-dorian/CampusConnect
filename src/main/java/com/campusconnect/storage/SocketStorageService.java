@@ -19,9 +19,9 @@ public class SocketStorageService implements StorageService {
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
 
-            System.out.println("✅ Connected to Server via Sockets.");
+            System.out.println("Connected to Server via Sockets.");
         } catch (IOException e) {
-            System.err.println("❌ Failed to connect to Server. Is Server.java running?");
+            System.err.println("Failed to connect to Server.");
             e.printStackTrace();
         }
     }
