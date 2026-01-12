@@ -1,4 +1,4 @@
-# Campus Connect 🎓
+# Campus Connect 
 
 **Campus Connect** is a desktop social media application designed for university students to share knowledge, ask questions, and collaborate in study groups.
 
@@ -8,22 +8,22 @@ Note: This is a college project. It is not meant to provide a secure platform fo
 
 ---
 
-## 🚀 Key Features
+##  Key Features
 
-### 📱 Social & Community
+###  Social & Community
 * **News Feed:** Post updates, share thoughts, and attach images.
 * **Comments:** Interactive comment section for every post.
 * **Groups:** Create and view specific study groups (e.g., "Computer Science Year 1").
 * **Inbox:** Receive system notifications when your questions are answered.
 
-### 🎮 Gamification & Q&A
+###  Gamification & Q&A
 * **Live Q&A Queue:** Students can ask help questions.
 * **Timer System:** Questions are tracked by time (Green/Orange/Red status).
 * **Points & Leaderboard:** Users earn points for posting and resolving questions quickly.
     * *Speed Bonus:* +50 points for answering within 5 minutes.
     * *Standard Reward:* Points scale based on difficulty.
 
-### 🛠 Technical Highlights
+###  Technical Highlights
 * **Client-Server Architecture:** Custom TCP protocol using `java.net.Socket`.
 * **Multithreaded Server:** Handles multiple concurrent clients using a Cached Thread Pool.
 * **Database Integration:** Persistent storage using **Oracle Database 23c Free** (Docker).
@@ -32,7 +32,7 @@ Note: This is a college project. It is not meant to provide a secure platform fo
 
 ---
 
-## 🏗 Architecture
+##  Architecture
 
 1. **Client:** Sends commands (e.g., `"GET_ALL_POSTS"`, `"SAVE_STUDENT"`) via Object Streams.
 2. **Server:** Listens on Port `5000`, processes the request, connects to Oracle, and returns the result.
@@ -40,7 +40,7 @@ Note: This is a college project. It is not meant to provide a secure platform fo
 
 ---
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 * **Language:** Java 21
 * **UI Framework:** JavaFX (FXML)
@@ -51,7 +51,7 @@ Note: This is a college project. It is not meant to provide a secure platform fo
 
 ---
 
-## ⚙️ Setup & Installation
+##  Setup & Installation
 
 ### Prerequisites
 
@@ -74,7 +74,7 @@ docker run -d -p 1521:1521 -e ORACLE_PASSWORD=SecretPassword123 gvenzl/oracle-fr
 ### 2. Clone the Repository
 
 ```bash
-git clone [https://github.com/YOUR_USERNAME/CampusConnect.git](https://github.com/YOUR_USERNAME/CampusConnect.git)
+git clone [https://github.com/andreas-tanas-dorian/CampusConnect.git](https://github.com/andreas-dorian-tanas/CampusConnect.git)
 cd CampusConnect
 
 ```
@@ -88,7 +88,7 @@ mvn clean install
 
 ---
 
-## ▶️ How to Run
+##  How to Run
 
 Since this is a Client-Server application, you must run the components in a specific order:
 
@@ -97,7 +97,7 @@ Since this is a Client-Server application, you must run the components in a spec
 Run the `Server.java` file.
 
 * **Location:** `src/main/java/com/campusconnect/server/Server.java`
-* **Output:** You should see `🚀 Server listening on port 5000`.
+* **Output:** You should see `Server listening on port 5000`.
 
 ### Step 2: Start the Client
 
@@ -108,7 +108,7 @@ Run the `App.java` file.
 
 ---
 
-## 🧪 Usage Guide
+##  Usage Guide
 
 1. **Register:** Create a new account with your email and group details.
 2. **Login:** Use your credentials to enter the Main Feed.
