@@ -20,13 +20,12 @@
 
     <Label text="Post a New Question" styleClass="heading-small"/>
 
-    <Label text="Describe your issue clearly:" style="-fx-text-fill: #666; -fx-font-size: 12px;"/>
+    <Label text="Describe your issue clearly:" style="-fx-text-fill: #7f8c8d; -fx-font-size: 12px;"/>
 
     <TextArea fx:id="questionInput"
               promptText="e.g. How do I fix the NullPointerException in the login service?"
               wrapText="true"
-              prefHeight="120"
-              styleClass="text-area-custom"/>
+              prefHeight="120"/>
 
     <HBox spacing="10" alignment="CENTER_RIGHT">
         <Button text="Cancel" onAction="#handleCancel" styleClass="button, cancel-button"/>

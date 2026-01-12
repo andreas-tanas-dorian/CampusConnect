@@ -1,72 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<SplitPane dividerPositions="0.2, 0.75"
-           xmlns="http://javafx.com/javafx/21"
-           xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="com.campusconnect.controllers.FeedController"
-           stylesheets="@../styles.css">
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.campusconnect.controllers.FeedController"
+            stylesheets="@../styles.css">
 
-    <VBox spacing="10" styleClass="sidebar-left">
-        <VBox spacing="5" styleClass="profile-card">
-            <Label fx:id="userNameLabel" text="Student Name" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
-            <Label fx:id="userDetailLabel" text="Loading details..." wrapText="true" style="-fx-font-size: 11px; -fx-opacity: 0.7;"/>
+    <top>
+        <Label fx:id="feedLabel" text="Main Feed" styleClass="heading" style="-fx-padding: 10;"
+               BorderPane.alignment="CENTER"/>
+    </top>
 
-            <HBox spacing="5" alignment="CENTER_LEFT">
-                <Label text="Score:" style="-fx-opacity: 0.7;"/>
-                <Label fx:id="userScoreLabel" text="0" style="-fx-font-weight: bold; -fx-text-fill: #3498db;"/>
+    <center>
+        <ListView fx:id="postListView" />
+    </center>
+
+    <bottom>
+        <VBox spacing="10" style="-fx-padding: 10;">
+            <TextArea fx:id="postContentArea" promptText="Write something..." prefHeight="60"/>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Button text="Attach Photo" onAction="#handleAttachImage" styleClass="button"/>
+                <Label fx:id="selectedImageLabel" text="No file selected" style="-fx-opacity: 0.6;"/>
             </HBox>
 
-            <Separator/>
-            <Button text="🏆 Leaderboard" onAction="#openLeaderboard" maxWidth="Infinity" style="-fx-font-size: 11px;"/>
+            <Button text="Post" onAction="#handlePost" maxWidth="Infinity" styleClass="button"/>
         </VBox>
+    </bottom>
 
-        <Separator/>
-        <Label text="Groups" styleClass="heading-small"/>
-
-        <ListView fx:id="groupListView" VBox.vgrow="ALWAYS"/>
-
-        <Label text="Create New Group" style="-fx-font-size: 12px;"/>
-        <TextField fx:id="newGroupName" promptText="Group Name"/>
-        <Button text="Create Group" onAction="#handleCreateGroup" maxWidth="Infinity"/>
-    </VBox>
-
-    <BorderPane>
-        <top>
-            <Label fx:id="feedLabel" text="Main Feed" styleClass="heading" style="-fx-padding: 10;" BorderPane.alignment="CENTER"/>
-        </top>
-
-        <center>
-            <ListView fx:id="postListView" />
-        </center>
-
-        <bottom>
-            <VBox spacing="10" style="-fx-padding: 10;">
-                <TextArea fx:id="postContentArea" promptText="Write something..." prefHeight="60"/>
-
-                <HBox spacing="10" alignment="CENTER_LEFT">
-                    <Button text="Attach Photo" onAction="#handleAttachImage"/>
-                    <Label fx:id="selectedImageLabel" text="No file selected" style="-fx-opacity: 0.6;"/>
-                </HBox>
-
-                <Button text="Post" onAction="#handlePost" maxWidth="Infinity" style="-fx-base: #2980b9;"/>
-                <Separator />
-                <Button text="Open My Inbox" onAction="#handleShowNotifications" maxWidth="Infinity" />
-                <Button text="Logout" onAction="#handleLogout" maxWidth="Infinity" styleClass="cancel-button"/>
-            </VBox>
-        </bottom>
-    </BorderPane>
-
-    <fx:include source="questions.fxml" fx:id="questionsPanel" />
-
-</SplitPane>
+</BorderPane>

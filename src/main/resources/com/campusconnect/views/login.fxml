@@ -17,8 +17,9 @@
         <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
     </padding>
 
-    <Label text="Campus Connect" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
-    <Label text="Please log in to continue" style="-fx-text-fill: #95a5a6;"/>
+    <Label text="Campus Connect" styleClass="heading"/>
+
+    <Label text="Please log in to continue" style="-fx-text-fill: #7f8c8d;"/>
 
     <VBox spacing="5" maxWidth="300">
         <Label text="Email"/>
@@ -30,10 +31,10 @@
         <PasswordField fx:id="passwordField" promptText="••••••" />
     </VBox>
 
-    <Label fx:id="errorLabel" text="" style="-fx-text-fill: #e74c3c;" />
+    <Label fx:id="errorLabel" text="" style="-fx-text-fill: #e53935;"/>
 
-    <Button text="Log In" onAction="#handleLogin" defaultButton="true" prefWidth="200" style="-fx-base: #3498db;"/>
+    <Button text="Log In" onAction="#handleLogin" defaultButton="true" prefWidth="200" styleClass="button"/>
 
-    <Button text="Create New Account" onAction="#goToRegister" prefWidth="200" style="-fx-background-color: transparent; -fx-text-fill: #3498db; -fx-underline: true;"/>
+    <Button text="Create New Account" onAction="#goToRegister" prefWidth="200" styleClass="button, link-button"/>
 
 </VBox>

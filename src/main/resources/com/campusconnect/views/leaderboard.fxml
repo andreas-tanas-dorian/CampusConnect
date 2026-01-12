@@ -13,10 +13,11 @@
 
     <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
 
-    <Label text="🏆 Campus Leaderboard" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
-    <Label text="Top students by contribution score" style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d;"/>
+    <Label text="🏆 Campus Leaderboard" styleClass="heading"/>
 
-    <TableView fx:id="leaderboardTable" prefWidth="450" prefHeight="400">
+    <Label text="Top students by contribution score" style="-fx-font-size: 12px; -fx-text-fill: #95a5a6;"/>
+
+    <TableView fx:id="leaderboardTable" VBox.vgrow="ALWAYS">
         <columns>
             <TableColumn fx:id="nameCol" text="Student" prefWidth="180"/>
             <TableColumn fx:id="groupCol" text="Group" prefWidth="100"/>

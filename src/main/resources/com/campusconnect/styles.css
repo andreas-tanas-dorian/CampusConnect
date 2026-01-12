@@ -1,13 +1,21 @@
-/* --- DARK MODE VARIABLES & DEFAULTS --- */
+/* --- MODERN GREEN & WHITE VARIABLES --- */
 .root {
     /* Define our Palette */
-    -fx-base: #1e1e1e;             /* Base color for calculations */
-    -fx-background-color: #1e1e1e; /* Main Window Background */
-    -fx-control-inner-background: #2b2b2b; /* Input fields & Lists background */
-    -fx-control-inner-background-alt: #323232; /* Alternating list rows */
-    -fx-text-base-color: #e0e0e0;  /* Main Text Color (Light Grey) */
-    -fx-prompt-text-fill: #808080; /* Placeholder text */
-    -fx-accent: #3498db;           /* Focus color (Blue) */
+    -fx-base: #f4f7f6;             /* Off-white/Very light grey background */
+    -fx-background-color: #f4f7f6; /* Main Window Background */
+
+    /* Input backgrounds: Pure white for contrast against off-white base */
+    -fx-control-inner-background: #ffffff;
+    -fx-control-inner-background-alt: #e8f5e9; /* Very faint green for zebra striping */
+
+    /* Text Colors */
+    -fx-text-base-color: #2d3436;  /* Dark Grey (softer than black) */
+    -fx-prompt-text-fill: #b2bec3; /* Light grey placeholder */
+
+    /* Accents */
+    -fx-accent: #43a047;           /* Primary Green (Material Green 600) */
+    -fx-focus-color: #66bb6a;      /* Lighter green for focus glow */
+    -fx-faint-focus-color: rgba(67, 160, 71, 0.2);
 
     -fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
     -fx-font-size: 14px;
@@ -15,97 +23,129 @@
 
 /* --- LABELS & HEADINGS --- */
 .label {
-    -fx-text-fill: #e0e0e0; /* Force all standard labels to be light */
+    -fx-text-fill: #2d3436; /* Dark grey text */
 }
 
 .heading, .heading-small {
-    -fx-text-fill: #ffffff; /* Headings are pure white */
+    -fx-text-fill: #2e7d32; /* Darker Forest Green for headings */
     -fx-font-weight: bold;
 }
 .heading { -fx-font-size: 24px; }
-.heading-small { -fx-font-size: 14px; }
+.heading-small { -fx-font-size: 16px; }
 
 /* --- INPUT FIELDS (Text Areas, Inputs) --- */
 .text-field, .text-area, .password-field {
-    -fx-background-color: #2b2b2b;
-    -fx-text-fill: #ffffff;
-    -fx-border-color: #444444;
-    -fx-border-radius: 4px;
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #2d3436;
+    -fx-border-color: #dfe6e9; /* Subtle light grey border */
+    -fx-border-radius: 6px;    /* Modern rounded corners */
+    -fx-background-radius: 6px;
+    -fx-padding: 8px;
 }
 
 .text-field:focused, .text-area:focused, .password-field:focused {
-    -fx-border-color: #3498db; /* Blue border on focus */
-    -fx-background-color: #323232;
+    -fx-border-color: #43a047; /* Green border on focus */
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(three-pass-box, rgba(67, 160, 71, 0.3), 5, 0, 0, 0); /* Soft green glow */
 }
 
 /* --- BUTTONS --- */
 .button {
-    -fx-background-color: #3498db; /* Blue */
+    -fx-background-color: #43a047; /* Primary Green */
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-cursor: hand;
-    -fx-background-radius: 4px;
+    -fx-background-radius: 6px;
+    -fx-padding: 8px 16px;
 }
-.button:hover { -fx-background-color: #2980b9; }
+.button:hover {
+    -fx-background-color: #2e7d32; /* Darker green on hover */
+}
 
+/* Cancel Button - Neutral Grey (NOT Red) */
 .button.cancel-button {
-    -fx-background-color: #555555; /* Dark Grey for Cancel */
+    -fx-background-color: #b0bec5; /* Blue-Grey neutral */
+    -fx-text-fill: white;
 }
-.button.cancel-button:hover { -fx-background-color: #666666; }
+.button.cancel-button:hover {
+    -fx-background-color: #78909c;
+}
+
+/* --- DANGER BUTTONS (Red restricted to these) --- */
+/* Apply styleClass="button danger-button" to Logout or Delete buttons */
+.button.danger-button {
+    -fx-background-color: #e53935; /* Material Red */
+}
+.button.danger-button:hover {
+    -fx-background-color: #c62828;
+}
+
+/* Hyperlink style buttons (like 'Create Account') */
+.button.link-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #2e7d32; /* Forest Green */
+    -fx-underline: true;
+}
+.button.link-button:hover {
+    -fx-text-fill: #1b5e20;
+}
 
 /* --- LISTS & TABLES --- */
 .list-view, .table-view {
     -fx-background-color: transparent;
-    -fx-border-color: #333333;
+    -fx-border-color: #dfe6e9;
+    -fx-border-radius: 4px;
 }
 
 .list-cell, .table-cell {
-    -fx-text-fill: #e0e0e0;
-    -fx-background-color: transparent; /* Let the row color show */
+    -fx-text-fill: #2d3436;
+    -fx-background-color: transparent;
     -fx-padding: 8px;
 }
 
-/* Zebra Striping for Lists/Tables */
+/* Zebra Striping */
 .list-cell:odd, .table-row-cell:odd {
-    -fx-background-color: #252525;
+    -fx-background-color: #f1f8e9; /* Very light green tint */
 }
 .list-cell:even, .table-row-cell:even {
-    -fx-background-color: #1e1e1e;
+    -fx-background-color: #ffffff; /* White */
 }
 
 .list-cell:filled:selected, .table-row-cell:filled:selected {
-    -fx-background-color: #0d47a1; /* Dark Blue selection */
-    -fx-text-fill: white;
+    -fx-background-color: #a5d6a7; /* Soft pastel green selection */
+    -fx-text-fill: #1b5e20;        /* Dark green text for readability */
 }
 
 /* --- SIDEBARS & CONTAINERS --- */
 .sidebar-left, .sidebar-container {
-    -fx-background-color: #252525; /* Slightly lighter than main background */
-    -fx-border-color: #333333;
-    -fx-border-width: 0 1 0 1;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #dfe6e9;
+    -fx-border-width: 0 1 0 0;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 2, 0); /* Subtle shadow separator */
 }
 
 /* Profile Card in Sidebar */
 .profile-card {
-    -fx-background-color: #2b2b2b; /* Card pops out from sidebar */
-    -fx-padding: 10;
-    -fx-background-radius: 5px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 2);
-    -fx-border-color: #444444;
+    -fx-background-color: #e8f5e9; /* Light Green Card */
+    -fx-padding: 15;
+    -fx-background-radius: 8px;
+    -fx-border-color: #c8e6c9;
+    -fx-border-radius: 8px;
 }
 
-/* --- SPLIT PANE (The dividers) --- */
+/* --- SPLIT PANE --- */
 .split-pane {
-    -fx-background-color: #1e1e1e;
+    -fx-background-color: #f4f7f6;
 }
 .split-pane > .split-pane-divider {
-    -fx-background-color: #1e1e1e;
-    -fx-padding: 0 2px;
+    -fx-background-color: #dfe6e9;
+    -fx-padding: 0 1px;
 }
 
 /* --- POPUP WINDOW --- */
 .popup-window {
-    -fx-background-color: #252525;
-    -fx-border-color: #444444;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #43a047; /* Green border for popups */
     -fx-border-width: 1px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 4);
 }

@@ -16,9 +16,11 @@
         <Insets top="10" right="10" bottom="10" left="10"/>
     </padding>
 
-    <Label fx:id="postLabel" text="Post Content Here" style="-fx-font-weight: bold;"/>
+    <Label fx:id="postLabel" text="Post Content Here" styleClass="heading-small"/>
+
     <ListView fx:id="commentsList" prefHeight="300"/>
 
     <TextField fx:id="commentInput" promptText="Write a comment..."/>
-    <Button text="Add Comment" onAction="#handleAddComment" maxWidth="Infinity"/>
+
+    <Button text="Add Comment" onAction="#handleAddComment" maxWidth="Infinity" styleClass="button"/>
 </VBox>

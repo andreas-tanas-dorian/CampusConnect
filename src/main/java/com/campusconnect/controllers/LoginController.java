@@ -33,7 +33,7 @@ public class LoginController {
             }
 
             AppState.getInstance().setCurrentUser(s);
-            App.setRoot("feed");
+            App.setRoot("main_layout");
 
         } catch (IllegalArgumentException | AuthException e) {
             errorLabel.setText(e.getMessage());

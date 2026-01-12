@@ -25,7 +25,7 @@ public class App extends Application {
         storage = new SocketStorageService();
         scene = new Scene(loadFXML("login"), 640, 480);
         stage.setScene(scene);
-        stage.setTitle("Campus Connect (Client Mode)"); // Updated Title
+        stage.setTitle("Campus Connect (Client Mode)");
         stage.show();
     }
 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.campusconnect.controllers.ProfileController"
+      stylesheets="@../styles.css"
+      spacing="20" style="-fx-padding: 30; -fx-alignment: TOP_CENTER;">
+
+    <Label text="My Profile" styleClass="heading"/>
+
+    <GridPane vgap="15" hgap="20" alignment="CENTER">
+        <Label text="Name:" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+        <Label fx:id="nameLabel" text="..." GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Email:" GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+        <Label fx:id="emailLabel" text="..." GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Group:" GridPane.rowIndex="2" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+        <Label fx:id="groupLabel" text="..." GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Score:" GridPane.rowIndex="3" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+
+        <Label fx:id="scoreLabel" text="0" style="-fx-text-fill: #43a047; -fx-font-weight: bold; -fx-font-size: 14px;"
+               GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+    </GridPane>
+</VBox>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.campusconnect.controllers.GroupsController"
+      stylesheets="@../styles.css"
+      spacing="15" style="-fx-padding: 20;">
+
+    <Label text="Study Groups" styleClass="heading-small" style="-fx-font-size: 18px;"/>
+
+    <HBox spacing="10">
+        <TextField fx:id="newGroupName" promptText="Enter group name..." HBox.hgrow="ALWAYS"/>
+
+        <Button text="Create Group" onAction="#handleCreateGroup" styleClass="button"/>
+    </HBox>
+
+    <Separator/>
+
+    <ListView fx:id="groupListView" VBox.vgrow="ALWAYS"/>
+
+    <Label text="* Select a group to view posts" style="-fx-text-fill: #95a5a6; -fx-font-size: 10px;"/>
+</VBox>

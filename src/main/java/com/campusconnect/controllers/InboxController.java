@@ -24,7 +24,6 @@ public class InboxController {
     private void loadNotifications() {
         try {
             String currentUserId = AppState.getInstance().getCurrentUser().getId();
-
             List<Notification> myNotifs = App.storage.getNotifications(currentUserId);
 
             if (myNotifs.isEmpty()) {
@@ -54,10 +53,5 @@ public class InboxController {
             e.printStackTrace();
             statusLabel.setText("Error loading notifications.");
         }
-    }
-
-    @FXML
-    private void handleClose() {
-        statusLabel.getScene().getWindow().hide();
     }
 }

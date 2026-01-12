@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.VBox?>
@@ -10,18 +9,16 @@
       xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.campusconnect.controllers.InboxController"
-      prefWidth="400.0" prefHeight="500.0">
+      stylesheets="@../styles.css">
 
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
 
-    <Label text="My Inbox" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+    <Label text="My Inbox" styleClass="heading-small"/>
 
-    <Label fx:id="statusLabel" text="Loading..." textFill="grey"/>
+    <Label fx:id="statusLabel" text="Loading..." style="-fx-text-fill: #95a5a6;"/>
 
     <ListView fx:id="notificationList" VBox.vgrow="ALWAYS"/>
-
-    <Button text="Close" onAction="#handleClose" prefWidth="100"/>
 
 </VBox>

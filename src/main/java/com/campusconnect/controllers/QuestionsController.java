@@ -1,15 +1,16 @@
 package com.campusconnect.controllers;
 
+import com.campusconnect.App;
+import com.campusconnect.models.Question;
 import com.campusconnect.services.AppState;
 import com.campusconnect.storage.StorageService;
-import com.campusconnect.models.Question;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.VBox;
@@ -24,15 +25,23 @@ import java.util.List;
 
 public class QuestionsController {
 
-    @FXML
-    private VBox questionsListContainer;
+    @FXML private VBox questionsListContainer;
 
     private StorageService storageService;
     private Timeline chronometer;
 
+    // Called automatically when FXML loads
+    @FXML
+    public void initialize() {
+        // If loaded manually, storage might be null initially.
+        // We set it from App.storage for safety, though MainLayout sets it too.
+        this.storageService = App.storage;
+        startChronometer();
+    }
+
     public void setStorageService(StorageService service) {
         this.storageService = service;
-        startChronometer();
+        refreshQuestionsUI();
     }
 
     private void startChronometer() {
@@ -42,16 +51,15 @@ public class QuestionsController {
         chronometer.play();
     }
 
-    private void refreshQuestionsUI() {
-        if (storageService == null) return;
+    public void refreshQuestionsUI() {
+        if (storageService == null || questionsListContainer == null) return;
+
         try {
             questionsListContainer.getChildren().clear();
             List<Question> openQuestions = storageService.getOpenQuestions();
 
             if (openQuestions.isEmpty()) {
-                Label emptyLabel = new Label("No pending questions.");
-                emptyLabel.setStyle("-fx-text-fill: gray; -fx-padding: 10;");
-                questionsListContainer.getChildren().add(emptyLabel);
+                questionsListContainer.getChildren().add(new Label("No pending questions."));
             } else {
                 for (Question q : openQuestions) {
                     questionsListContainer.getChildren().add(createQuestionRow(q));
@@ -62,27 +70,22 @@ public class QuestionsController {
         }
     }
 
-    private VBox createQuestionRow(Question q) {
-        VBox card = new VBox();
-        card.getStyleClass().add("question-card");
-        card.setStyle("-fx-border-color: #444444; -fx-border-radius: 5; -fx-background-color: #2b2b2b; -fx-padding: 8; -fx-spacing: 5;");
-        Label contentLabel = new Label(q.getContent());
-        contentLabel.setWrapText(true);
-        contentLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 12px;");
+    private Node createQuestionRow(Question q) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/campusconnect/views/question_item.fxml"));
 
-        long secondsWaiting = ChronoUnit.SECONDS.between(q.getTimestamp(), LocalDateTime.now());
-        String color = (secondsWaiting > 300) ? "red" : (secondsWaiting > 60) ? "orange" : "green";
+            // Reuse the QuestionRowController logic we built earlier
+            QuestionRowController controller = new QuestionRowController();
+            loader.setController(controller);
 
-        Label timeLabel = new Label("Wait Time: " + formatTime(secondsWaiting));
-        timeLabel.setStyle("-fx-text-fill: " + color + "; -fx-font-size: 11px;");
+            Node node = loader.load();
+            controller.setData(q, this::handleResolve);
 
-        Button resolveBtn = new Button("Answer & Resolve");
-        resolveBtn.setMaxWidth(Double.MAX_VALUE);
-        resolveBtn.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; -fx-cursor: hand; -fx-font-weight: bold;");
-        resolveBtn.setOnAction(e -> handleResolve(q));
-
-        card.getChildren().addAll(contentLabel, timeLabel, resolveBtn);
-        return card;
+            return node;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new Label("Error loading row");
+        }
     }
 
     private void handleResolve(Question q) {
@@ -95,9 +98,7 @@ public class QuestionsController {
             if (answer.trim().isEmpty()) return;
             try {
                 String currentUserId = AppState.getInstance().getCurrentUser().getId();
-
                 storageService.resolveQuestion(q, answer, currentUserId);
-
                 refreshQuestionsUI();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -105,36 +106,25 @@ public class QuestionsController {
         });
     }
 
-    private String formatTime(long totalSeconds) {
-        long minutes = totalSeconds / 60;
-        long seconds = totalSeconds % 60;
-        return String.format("%02d:%02d", minutes, seconds);
-    }
-
     @FXML
     private void handleAskQuestion() {
-        if (storageService == null) return;
-
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/campusconnect/views/AskQuestion.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/campusconnect/views/ask_question.fxml"));
             Parent root = loader.load();
-
             AskQuestionController controller = loader.getController();
             controller.setStorageService(this.storageService);
 
             Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Ask a Question");
             stage.setScene(new Scene(root));
-            stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
-            refreshQuestionsUI();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Could not load AskQuestion.fxml");
-        }
+            refreshQuestionsUI();
+        } catch (IOException e) { e.printStackTrace(); }
     }
 
+    // Ensure thread stops when view is destroyed (Optional but good practice)
     public void stopTimer() {
         if (chronometer != null) chronometer.stop();
     }
